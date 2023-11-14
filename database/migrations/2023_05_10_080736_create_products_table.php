@@ -17,9 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger("category_id");
             $table->string("pname");
             $table->string("description");
-            $table->decimal('price', 8, 0);
-            $table->string("used_time");
-            $table->String("condition");
+            $table->integer('price');
             $table->timestamps();
             $table->foreign("user_id")->references("id")->on("users");
             $table->foreign("category_id")->references("id")->on("categories");
