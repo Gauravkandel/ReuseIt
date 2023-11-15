@@ -18,6 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/products', [ProductController::class, 'index']);
-Route::get('/getpro', [ProductController::class, 'getpro']);
-Route::get('/getdat', [ProductController::class, 'getdata']);
+// Route::get('/products', [ProductController::class, 'index']);
+Route::get('/getIndivProduct/{id}', [ProductController::class, 'getIndivProduct']);
+Route::get('/getdat', [ProductController::class, 'fetchalldata']);
