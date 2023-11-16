@@ -19,10 +19,7 @@ class ProductController extends Controller
     {
         $page = $request->query('page', 1);
         $limit = $request->query('limit', 10);
-
-        // Validate $page and $limit as numeric values here
-
-        $items = Product::with(['category', 'image'])->paginate($limit);
+        $items = product::with(['category', 'image'])->skip(($page - 1) * $limit)->take($limit)->get();
         return response()->json($items);
     }
 
