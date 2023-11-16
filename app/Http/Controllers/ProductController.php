@@ -2,35 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\furniture;
-use App\Models\home_appliance;
-use App\Models\product;
+use App\Models\Furniture;
+use App\Models\HomeAppliance;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = product::with(['category', 'image'])->get();
+        $products = Product::with(['category', 'image'])->get();
         return response()->json(['products' => $products], 200);
     }
-    public function fetchalldata(Request $request)
+
+    public function fetchAllData(Request $request)
     {
         $page = $request->query('page', 1);
         $limit = $request->query('limit', 10);
-        $items = product::with(['category', 'image'])->skip(($page - 1) * $limit)->take($limit)->get();
+
+        // Validate $page and $limit as numeric values here
+
+        $items = Product::with(['category', 'image'])->paginate($limit);
         return response()->json($items);
     }
+
     public function getIndivProduct($id)
     {
-        $products = product::with(['category', 'image'])->find($id);
-        $category = $products->category->category_name;
-        if ($category == "Home Appliances") {
-            $data = home_appliance::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
-            return response()->json(['data' => $data ?? 0], 200);
-        } else if ($category == "Furniture") {
-            $data = furniture::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
-            return response()->json(['data' => $data ?? 0], 200);
+        try {
+            $product = Product::with(['category', 'image'])->findOrFail($id);
+
+            $category = $product->category->category_name;
+
+            $data = $this->getProductData($category, $id);
+
+            return response()->json(['data' => $data], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['error' => 'Product not found'], 404);
+        } catch (\Exception $e) {
+            // Handle other exceptions if needed
+            return response()->json(['error' => 'Something went wrong'], 500);
+        }
+    }
+
+
+    private function getProductData($category, $id)
+    {
+        switch ($category) {
+            case "Home Appliances":
+                return HomeAppliance::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+            case "Furniture":
+                return Furniture::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+            default:
+                return null;
         }
     }
 }
