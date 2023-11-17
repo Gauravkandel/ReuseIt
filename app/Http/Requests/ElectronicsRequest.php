@@ -36,7 +36,7 @@ class ElectronicsRequest extends FormRequest
             'condition' => 'required|string',
             'warranty_information' => 'nullable|string',
 
-            'image_urls.*' => 'image|mimes:jpeg,png,jpg',
+            'image_urls.*' => 'image|mimes:jpeg,png,jpg,webp',
         ];
     }
     protected function failedValidation(Validator $validator)

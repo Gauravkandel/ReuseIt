@@ -27,9 +27,13 @@ class product extends Model
     {
         return $this->hasOne(HomeAppliance::class);
     }
-    public function productImage()
+    public function electronic()
     {
-        return $this->hasMany(product_image::class);
+        return $this->hasOne(electronic::class);
+    }
+    public function furniture()
+    {
+        return $this->hasOne(furniture::class);
     }
     public function user()
     {

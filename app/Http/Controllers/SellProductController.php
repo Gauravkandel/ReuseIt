@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ElectronicsRequest;
+use App\Http\Requests\FurnitureRequest;
 use App\Http\Requests\HomeApplianceRequest;
 use App\Models\Electronic;
+use App\Models\furniture;
 use App\Models\HomeAppliance;
 use App\Models\Product;
 use App\Models\Product_image;
@@ -16,11 +18,27 @@ class SellProductController extends Controller
     {
         return $this->insertProduct($request, HomeAppliance::class, ['type_of_appliance', 'brand', 'model', 'capacity', 'features', 'condition', 'warranty_information']);
     }
-
     public function Electronics(ElectronicsRequest $request)
     {
         return $this->insertProduct($request, electronic::class, ['type_of_electronic', 'brand', 'model', 'capacity', 'condition', 'warranty_information']);
     }
+    public function Furnitures(FurnitureRequest $request)
+    {
+        return $this->insertProduct($request, furniture::class, ['type_of_furniture', 'material', 'dimensions', 'color', 'style', 'condition', 'assembly_required']);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     private function insertProduct($request, $model, $dataKeys)
     {
         $productData = $request->validated();
