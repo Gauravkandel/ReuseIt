@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SellProductController;
 use App\Http\Controllers\ViewProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,4 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(ViewProductController::class)->group(function () { //for viewing products
     Route::get('/getIndivProduct/{id}', 'getIndivProduct');
     Route::get('/getdat', 'fetchalldata');
+});
+Route::controller(SellProductController::class)->group(function () { //for posting products
+    Route::post('/homeappliances', 'HomeAppliances');
 });

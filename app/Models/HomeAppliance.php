@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class HomeAppliance extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'product_id',
+        'type_of_appliance',
+        'brand',
+        'model',
+        'capacity',
+        'features',
+        'condition',
+        'warranty_information',
+    ];
     public function product()
     {
         return $this->belongsTo(Product::class);
