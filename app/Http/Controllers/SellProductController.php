@@ -2,29 +2,41 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ClothingRequest;
 use App\Http\Requests\ElectronicsRequest;
 use App\Http\Requests\FurnitureRequest;
 use App\Http\Requests\HomeApplianceRequest;
+use App\Http\Requests\SportsRequest;
+use App\Models\clothing;
 use App\Models\Electronic;
 use App\Models\furniture;
 use App\Models\HomeAppliance;
 use App\Models\Product;
 use App\Models\Product_image;
+use App\Models\sport;
 use Illuminate\Support\Facades\DB;
 
 class SellProductController extends Controller
 {
-    public function HomeAppliances(HomeApplianceRequest $request)
-    {
-        return $this->insertProduct($request, HomeAppliance::class, ['type_of_appliance', 'brand', 'model', 'capacity', 'features', 'condition', 'warranty_information']);
-    }
     public function Electronics(ElectronicsRequest $request)
     {
-        return $this->insertProduct($request, electronic::class, ['type_of_electronic', 'brand', 'model', 'capacity', 'condition', 'warranty_information']);
+        return $this->insertProduct($request, electronic::class, ['type_of_electronic', 'brand', 'model', 'capacity', 'condition', 'warranty_information'], 1);
+    }
+    public function HomeAppliances(HomeApplianceRequest $request)
+    {
+        return $this->insertProduct($request, HomeAppliance::class, ['type_of_appliance', 'brand', 'model', 'capacity', 'features', 'condition', 'warranty_information'], 2);
     }
     public function Furnitures(FurnitureRequest $request)
     {
-        return $this->insertProduct($request, furniture::class, ['type_of_furniture', 'material', 'dimensions', 'color', 'style', 'condition', 'assembly_required']);
+        return $this->insertProduct($request, furniture::class, ['type_of_furniture', 'material', 'dimensions', 'color', 'style', 'condition', 'assembly_required'], 3);
+    }
+    public function Clothing(ClothingRequest $request)
+    {
+        return $this->insertProduct($request, clothing::class, ['type_of_clothing_accessory', 'size', 'color', 'brand', 'material', 'condition', 'care_instructions'], 4);
+    }
+    public function Sports(SportsRequest $request)
+    {
+        return $this->insertProduct($request, sport::class, ['type_of_equipment', 'brand', 'condition', 'size_weight', 'features', 'suitable_sport_activity', 'warranty_information', 'usage_instructions'], 5);
     }
 
 
@@ -36,16 +48,14 @@ class SellProductController extends Controller
 
 
 
-
-
-
-    private function insertProduct($request, $model, $dataKeys)
+    private function insertProduct($request, $model, $dataKeys, $category)
     {
         $productData = $request->validated();
         DB::beginTransaction();
 
         try {
             // Insert into products table
+            $productData['category_id'] = $category;
             $product = Product::create($productData);
 
             // Insert into specific table (home_appliances or electronics or any other categoric fields)
@@ -65,7 +75,6 @@ class SellProductController extends Controller
                     $productImage->save();
                 }
             }
-
             DB::commit();
             return response()->json(['success' => 'successful'], 200);
         } catch (\Exception $e) {

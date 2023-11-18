@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class HomeApplianceRequest extends FormRequest
+class ClothingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,15 +32,16 @@ class HomeApplianceRequest extends FormRequest
             'Municipality' => 'required|string',
             'price' => 'required|integer',
 
-            'type_of_appliance' => 'required|string|max:255',
-            'brand' => 'required|string|max:255',
-            'model' => 'required|string|max:255',
-            'capacity' => 'required|string|max:255',
-            'features' => 'required|string',
-            'condition' => 'required|string|max:255',
-            'warranty_information' => 'required|string',
+            'type_of_clothing_accessory' => 'required|string',
+            'size' => 'required|string',
+            'color' => 'required|string',
+            'brand' => 'required|string',
+            'material' => 'nullable|string',
+            'condition' => 'required|string',
+            'care_instructions' => 'required|string',
 
             'image_urls.*' => 'image|mimes:jpeg,png,jpg,webp',
+
         ];
     }
     protected function failedValidation(Validator $validator)
