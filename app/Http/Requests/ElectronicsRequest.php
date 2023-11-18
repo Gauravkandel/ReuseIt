@@ -28,6 +28,9 @@ class ElectronicsRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'pname' => 'required|string|max:255',
             'description' => 'required|string',
+            'Province' => 'required|string',
+            'District' => 'required|string',
+            'Municipality' => 'required|string',
             'price' => 'required|integer',
 
             'type_of_electronic' => 'required|string',

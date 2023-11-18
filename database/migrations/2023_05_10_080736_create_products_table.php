@@ -19,6 +19,9 @@ return new class extends Migration
             $table->foreign("category_id")->references("id")->on("categories")->onDelete('cascade');
             $table->string("pname");
             $table->string("description");
+            $table->string("Province");
+            $table->string("District");
+            $table->string("Municipality");
             $table->integer('price');
             $table->timestamps();
         });

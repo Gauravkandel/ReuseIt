@@ -28,6 +28,9 @@ class HomeApplianceRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'pname' => 'required|string|max:255',
             'description' => 'required|string',
+            'Province' => 'required|string',
+            'District' => 'required|string',
+            'Municipality' => 'required|string',
             'price' => 'required|integer',
 
             'type_of_appliance' => 'required|string|max:255',

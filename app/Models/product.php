@@ -13,8 +13,15 @@ class product extends Model
         'category_id',
         'pname',
         'description',
+        'Province',
+        'District',
+        'Municipality',
         'price',
     ];
+    public function setPnameAttribute($value)
+    {
+        $this->attributes['pname'] = ucfirst($value);
+    }
     public function category()
     {
         return $this->belongsTo(Category::class);
