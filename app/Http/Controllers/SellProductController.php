@@ -65,8 +65,8 @@ class SellProductController extends Controller
 
             // Store the uploaded image paths
             if ($request->has('image_urls')) {
-                foreach ($request->file('image_urls') as $image) {
-                    $imageName = time() . '_' . $image->getClientOriginalName();
+                foreach ($request->file('image_urls') as $index => $image) {
+                    $imageName = time() . $index . '_' . $image->getClientOriginalName();
                     $image->move(public_path('images'), $imageName);
                     $productImage = new product_image([
                         'product_id' => $product->id,
