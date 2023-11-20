@@ -29,4 +29,8 @@ Route::controller(SellProductController::class)->group(function () { //for posti
     Route::post('/furnitures', 'Furnitures');
     Route::post('/clothings', 'Clothing');
     Route::post('/sports', 'Sports');
+    Route::post('/books', 'Books');
+    Route::post('/antiques', 'Antiques');
+    Route::post('/toys', 'Toys');
+    Route::post('/music', 'Music');
 });
