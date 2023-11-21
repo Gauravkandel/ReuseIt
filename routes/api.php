@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SellProductController;
 use App\Http\Controllers\ViewProductController;
 use Illuminate\Http\Request;
@@ -33,4 +34,13 @@ Route::controller(SellProductController::class)->group(function () { //for posti
     Route::post('/antiques', 'Antiques');
     Route::post('/toys', 'Toys');
     Route::post('/music', 'Music');
+});
+
+
+//authentication
+Route::post('/login', [AuthController::class, 'login']);
+Route::group(['middleware' => 'api'], function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::post('/me', [AuthController::class, 'me']);
 });
