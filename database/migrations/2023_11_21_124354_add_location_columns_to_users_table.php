@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('District')->nullable();
             $table->string('Municipality')->nullable();
             $table->string('Phone_no')->nullable();
+            $table->string('Profile_image')->default("Default_profile.jpg");
         });
     }
 
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->dropColumn('District');
             $table->dropColumn('Municipality');
             $table->dropColumn('Phone_no');
+            $table->dropColumn('Profile_image');
         });
     }
 };
