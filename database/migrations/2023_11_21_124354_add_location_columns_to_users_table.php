@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('Province')->nullable();
             $table->string('District')->nullable();
             $table->string('Municipality')->nullable();
+            $table->string('Phone_no')->nullable();
         });
     }
 
