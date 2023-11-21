@@ -25,7 +25,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('Province');
+            $table->dropColumn('District');
+            $table->dropColumn('Municipality');
+            $table->dropColumn('Phone_no');
         });
     }
 };
