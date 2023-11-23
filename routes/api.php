@@ -24,6 +24,7 @@ Route::controller(ViewProductController::class)->group(function () { //for viewi
     Route::get('/getIndivProduct/{id}', 'getIndivProduct');
     Route::get('/getdat', 'fetchalldata');
     Route::get('/filter', 'filter');
+    Route::get('/search', 'search');
 });
 Route::controller(SellProductController::class)->group(function () { //for posting products
     Route::post('/homeappliances', 'HomeAppliances');
