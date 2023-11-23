@@ -24,7 +24,7 @@ class WelcomeMessageNotification extends Notification implements ShouldQueue
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
     }
 
     /**
@@ -44,10 +44,13 @@ class WelcomeMessageNotification extends Notification implements ShouldQueue
      *
      * @return array<string, mixed>
      */
-    public function toArray(object $notifiable): array
+    public function toDatabase(object $notifiable): array
     {
         return [
-            //
+            'data' => 'Welcome ' . $notifiable->name . ' to reuseit,
+            Thank you for using our Website!,If you have any questions, 
+            feel free to contact us at contact@gmail.com.
+            Regards, Reuseit'
         ];
     }
 }
