@@ -33,6 +33,10 @@ Route::controller(SellProductController::class)->group(function () { //for posti
     Route::post('/sports', 'Sports');
     Route::post('/books', 'Books');
     Route::post('/antiques', 'Antiques');
+    Route::post('/cars', 'Cars');
+    Route::post('/motorcycles', 'Motorcycle');
+    Route::post('/scooters', 'Scooter');
+    Route::post('/bicycles', 'Bicycle');
     Route::post('/toys', 'Toys');
     Route::post('/music', 'Music');
 });

@@ -64,15 +64,15 @@ class SellProductController extends Controller
     }
     public function Cars(CarsRequest $request)
     {
-        return $this->insertProduct($request, car::class, ['brand', 'model', 'year', 'mileage', 'condition', 'color', 'used_time', 'fuel_type', 'owner', 'transmission_type'], 8);
+        return $this->insertProduct($request, car::class, ['brand', 'model', 'year', 'mileage', 'condition', 'km_driven', 'color', 'used_time', 'fuel_type', 'owner', 'transmission_type'], 8);
     }
     public function Motorcycle(MotorRequest $request)
     {
-        return $this->insertProduct($request, motorcycle::class, ['brand', 'model', 'year', 'mileage', 'condition', 'color', 'used_time', 'owner'], 9);
+        return $this->insertProduct($request, motorcycle::class, ['brand', 'model', 'year', 'mileage', 'condition', 'km_driven', 'color', 'used_time', 'owner'], 9);
     }
     public function Scooter(ScooterRequest $request)
     {
-        return $this->insertProduct($request, scooter::class, ['brand', 'model', 'year', 'mileage', 'condition', 'color', 'used_time', 'owner'], 10);
+        return $this->insertProduct($request, scooter::class, ['brand', 'model', 'year', 'mileage', 'condition', 'km_driven', 'color', 'used_time', 'owner'], 10);
     }
     public function Bicycle(BicycleRequest $request)
     {
