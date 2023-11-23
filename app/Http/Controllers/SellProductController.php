@@ -125,6 +125,8 @@ class SellProductController extends Controller
                     ]);
                     $productImage->save();
                 }
+            } else {
+                return response()->json(['error' => 'Image is required'], 422);
             }
             DB::commit();
             return response()->json(['success' => 'successful'], 200);

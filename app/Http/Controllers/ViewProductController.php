@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\antique;
+use App\Models\bicycle;
 use App\Models\book;
+use App\Models\car;
 use App\Models\clothing;
 use App\Models\Furniture;
 use App\Models\HomeAppliance;
+use App\Models\motorcycle;
 use App\Models\music;
 use App\Models\Product;
+use App\Models\scooter;
 use App\Models\sport;
 use App\Models\toy;
 use App\Models\vehicle;
@@ -43,7 +47,32 @@ class ViewProductController extends Controller
         }
     }
 
+    public function filter(Request $request)
+    {
+        $category = $request->input('category');
+        $minPrice = $request->input('min_price');
+        $maxPrice = $request->input('max_price');
 
+        $query = Product::with('category');
+        // if (auth()->user()) {
+        //     $query->where('Municipality', auth()->user()->Municipality);
+        // }
+        if ($category) {
+            $query->whereHas('category', function ($q) use ($category) {
+                $q->where('category_name', $category);
+            });
+        }
+        if ($minPrice) {
+            $query->where('price', '>=', $minPrice);
+        }
+        if ($maxPrice) {
+            $query->where('price', '<=', $maxPrice);
+        }
+        $page = $request->query('page', 1);
+        $limit = $request->query('limit', 10);
+        $products = $query->with(['category', 'image'])->skip(($page - 1) * $limit)->take($limit)->get();
+        return response()->json($products);
+    }
     private function getProductData($category, $id)
     {
         switch ($category) {
@@ -59,8 +88,14 @@ class ViewProductController extends Controller
                 return book::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
             case "Antiques and Collectibles":
                 return antique::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
-            case "Vehicles":
-                return vehicle::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+            case "Cars":
+                return car::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+            case "Bicycles":
+                return bicycle::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+            case "Motorcycles":
+                return motorcycle::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+            case "Scooters":
+                return scooter::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
             case "Toys and Games":
                 return toy::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
             case "Musical Instruments":

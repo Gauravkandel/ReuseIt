@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(ViewProductController::class)->group(function () { //for viewing products
     Route::get('/getIndivProduct/{id}', 'getIndivProduct');
     Route::get('/getdat', 'fetchalldata');
+    Route::get('/filter', 'filter');
 });
 Route::controller(SellProductController::class)->group(function () { //for posting products
     Route::post('/homeappliances', 'HomeAppliances');

@@ -40,7 +40,7 @@ class HomeApplianceRequest extends FormRequest
             'condition' => 'required|string|max:255',
             'warranty_information' => 'required|string',
 
-            'image_urls.*' => 'image|mimes:jpeg,png,jpg,webp',
+            'image_urls.*' => 'required|image|mimes:jpeg,png,jpg,webp',
         ];
     }
     protected function failedValidation(Validator $validator)
