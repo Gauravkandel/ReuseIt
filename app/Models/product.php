@@ -42,6 +42,46 @@ class product extends Model
     {
         return $this->hasOne(furniture::class);
     }
+    public function clothings()
+    {
+        return $this->hasOne(clothing::class);
+    }
+    public function books()
+    {
+        return $this->hasOne(book::class);
+    }
+    public function antiques()
+    {
+        return $this->hasOne(antique::class);
+    }
+    public function cars()
+    {
+        return $this->hasOne(car::class);
+    }
+    public function motorcycles()
+    {
+        return $this->hasOne(motorcycle::class);
+    }
+    public function bicycles()
+    {
+        return $this->hasOne(bicycle::class);
+    }
+    public function scooters()
+    {
+        return $this->hasOne(scooter::class);
+    }
+    public function toys()
+    {
+        return $this->hasOne(toy::class);
+    }
+    public function musics()
+    {
+        return $this->hasOne(music::class);
+    }
+    public function sports()
+    {
+        return $this->hasOne(sport::class);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);

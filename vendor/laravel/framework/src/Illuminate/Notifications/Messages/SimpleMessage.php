@@ -214,7 +214,7 @@ class SimpleMessage
     {
         if ($line instanceof Action) {
             $this->action($line->text, $line->url);
-        } elseif (! $this->actionText) {
+        } elseif (!$this->actionText) {
             $this->introLines[] = $this->formatLine($line);
         } else {
             $this->outroLines[] = $this->formatLine($line);

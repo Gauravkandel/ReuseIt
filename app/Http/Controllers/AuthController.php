@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
+use App\Models\User;
+use App\Notifications\WelcomeMessageNotification;
+use Illuminate\Support\Facades\Notification;
+use PDO;
 
 class AuthController extends Controller
 {
@@ -14,9 +19,8 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
-
     /**
      * Get a JWT via given credentials.
      *
@@ -31,7 +35,19 @@ class AuthController extends Controller
         }
         return $this->respondWithToken($token);
     }
-
+    public function register(UserRequest $request)
+    {
+        $userValidation = $request->validated();
+        if ($request->has('Profile_image')) {
+            $profile = $request->file('Profile_image');
+            $profile_name = $profile->getClientOriginalName();
+            $profile->move(public_path('images'), $profile_name);
+            $userValidation['Profile_image'] = time() . $profile_name;
+        }
+        $userdata = User::create($userValidation);
+        Notification::send($userdata, new WelcomeMessageNotification);
+        return response()->json(['message' => "successfully registered"], 200);
+    }
     /**
      * Get the authenticated User.
      *
@@ -73,10 +89,11 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        $user = auth()->user();
+        $notifications = $user->unreadNotifications->count();
         $user_details = [
-            'user' => auth()->user()
+            'user' => auth()->user(),
         ];
-
         $cookie = cookie('jwt', $token, auth()->factory()->getTTL(30), null, null, false, true);
 
         return response()->json($user_details)->cookie($cookie);
