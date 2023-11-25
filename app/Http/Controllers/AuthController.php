@@ -30,10 +30,10 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (!auth()->attempt($credentials)) {
+        if (!$token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        return $this->respondWithToken();
+        return $this->respondWithToken($token);
     }
     public function register(UserRequest $request)
     {
@@ -87,18 +87,14 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken()
+    protected function respondWithToken($token)
     {
         $user = auth()->user();
-        $token = $user->createToken('token')->plainTextToken;
         $notifications = $user->unreadNotifications->count();
-        $cookie = cookie('jwt', $token, auth()->factory()->getTTL(30), null, null, false, true);
         $user_details = [
             'user' => auth()->user(),
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
         ];
+        $cookie = cookie('jwt', $token, auth()->factory()->getTTL(30), null, null, false, true);
 
         return response()->json($user_details)->withCookie($cookie);
     }
