@@ -30,8 +30,22 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['email', 'password']);
+        if (!$token = auth()->attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+            // Check if the email exists in the database
+            $user = User::where('email', $credentials['email'])->first();
 
-        if (!$token = auth()->attempt($credentials)) {
+            if (!$user) {
+                // Email not found in the database
+                return response()->json(['error' => 'Email not found'], 401);
+            }
+
+            // Check if the password is incorrect
+            if (!Hash::check($credentials['password'], $user->password)) {
+                // Password doesn't match
+                return response()->json(['error' => 'Password incorrect'], 401);
+            }
+
+            // Default unauthorized response if neither condition is met
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $this->respondWithToken($token);
