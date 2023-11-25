@@ -7,6 +7,7 @@ use App\Models\bicycle;
 use App\Models\book;
 use App\Models\car;
 use App\Models\clothing;
+use App\Models\electronic;
 use App\Models\Furniture;
 use App\Models\HomeAppliance;
 use App\Models\motorcycle;
@@ -115,6 +116,8 @@ class ViewProductController extends Controller
     private function getProductData($category, $id)
     {
         switch ($category) {
+            case "Electronics":
+                return electronic::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
             case "Home Appliances":
                 return HomeAppliance::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
             case "Furniture":
