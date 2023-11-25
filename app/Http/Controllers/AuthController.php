@@ -56,9 +56,9 @@ class AuthController extends Controller
         $userValidation = $request->validated();
         if ($request->has('Profile_image')) {
             $profile = $request->file('Profile_image');
-            $profile_name = $profile->getClientOriginalName();
+            $profile_name = time() . $profile->getClientOriginalName();
             $profile->move(public_path('images'), $profile_name);
-            $userValidation['Profile_image'] = time() . $profile_name;
+            $userValidation['Profile_image'] = $profile_name;
         }
         $userdata = User::create($userValidation);
         Notification::send($userdata, new WelcomeMessageNotification);
