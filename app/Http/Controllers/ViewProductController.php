@@ -117,31 +117,31 @@ class ViewProductController extends Controller
     {
         switch ($category) {
             case "Electronics":
-                return electronic::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return electronic::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Home Appliances":
-                return HomeAppliance::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return HomeAppliance::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Furniture":
-                return Furniture::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return Furniture::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Clothing and Accessories":
-                return clothing::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return clothing::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Sports and Fitness":
-                return sport::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return sport::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Books and Media":
-                return book::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return book::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Antiques and Collectibles":
-                return antique::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return antique::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Cars":
-                return car::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return car::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Bicycles":
-                return bicycle::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return bicycle::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Motorcycles":
-                return motorcycle::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return motorcycle::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Scooters":
-                return scooter::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return scooter::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Toys and Games":
-                return toy::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return toy::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             case "Musical Instruments":
-                return music::with(['product', 'product.image', 'product.category'])->where('product_id', $id)->get();
+                return music::with(['product', 'product.image', 'product.category', 'product.user'])->where('product_id', $id)->get();
             default:
                 return null;
         }
