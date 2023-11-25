@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Notifications\WelcomeMessageNotification;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Notification;
 use PDO;
 
@@ -66,10 +67,9 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
+        $cookie = Cookie::forget('jwt');
+        return response()->json(['message' => 'Successfully logged out'])->withCookie($cookie);
     }
-
     /**
      * Refresh a token.
      *
