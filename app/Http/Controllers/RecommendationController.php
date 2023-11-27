@@ -43,19 +43,25 @@ class RecommendationController extends Controller
     }
     public function getrecommended(Request $request)
     {
-        $user_id = $request->user_id;
-        if ($user_id) {
-            $categoryRecommendations = Recommendation::where('user_id', $user_id)
-                ->orderBy('count', 'desc')
-                ->take(5)
-                ->pluck('category_name');
-            $products = Product::where('user_id', '!=', $user_id)->whereIn('category_id', function ($query) use ($categoryRecommendations) {
+        $user_id = $request->input('user_id');
+
+        if (!$user_id) {
+            return response()->json(['recommendations' => null], 400);
+        }
+
+        $categoryRecommendations = Recommendation::where('user_id', $user_id)
+            ->orderByDesc('count')
+            ->take(5)
+            ->pluck('category_name');
+
+        $products = Product::where('user_id', '!=', $user_id)
+            ->whereIn('category_id', function ($query) use ($categoryRecommendations) {
                 $query->select('id')
                     ->from('categories')
                     ->whereIn('category_name', $categoryRecommendations);
-            })->get();
-            return response()->json(['recommendations' => $products ?? null], 200);
-        }
-        return response()->json(['recommendations' => null], 400);
+            })
+            ->get();
+
+        return response()->json(['recommendations' => $products], 200);
     }
 }
