@@ -30,7 +30,7 @@ class ElectronicsRequest extends FormRequest
             'Province' => 'required|string',
             'District' => 'required|string',
             'Municipality' => 'required|string',
-            'price' => 'required|integer',
+            'price' => 'required|integer|max:100000000',
 
             'type_of_electronic' => 'required|string',
             'brand' => 'required|string',

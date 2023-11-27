@@ -30,7 +30,8 @@ class BooksRequest extends FormRequest
             'Province' => 'required|string',
             'District' => 'required|string',
             'Municipality' => 'required|string',
-            'price' => 'required|integer',
+            'price' => 'required|integer|max:100000000',
+
 
             'title' => 'required|string',
             'author_artist' => 'required|string',

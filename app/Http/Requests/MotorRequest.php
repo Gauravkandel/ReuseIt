@@ -30,7 +30,7 @@ class MotorRequest extends FormRequest
             'Province' => 'required|string',
             'District' => 'required|string',
             'Municipality' => 'required|string',
-            'price' => 'required|integer',
+            'price' => 'required|integer|max:100000000',
 
             'brand' => 'required|string',
             'model' => 'required|string',

@@ -28,7 +28,7 @@ class MultiTableInsertRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'pname' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|integer',
+            'price' => 'required|integer|max:100000000',
 
             'type_of_appliance' => 'required|string|max:255',
             'brand' => 'required|string|max:255',

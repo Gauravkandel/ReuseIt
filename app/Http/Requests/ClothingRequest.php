@@ -30,7 +30,8 @@ class ClothingRequest extends FormRequest
             'Province' => 'required|string',
             'District' => 'required|string',
             'Municipality' => 'required|string',
-            'price' => 'required|integer',
+            'price' => 'required|integer|max:100000000',
+
 
             'type_of_clothing_accessory' => 'required|string',
             'size' => 'required|string',
