@@ -30,7 +30,7 @@ class HomeApplianceRequest extends FormRequest
             'Province' => 'required|string',
             'District' => 'required|string',
             'Municipality' => 'required|string',
-            'price' => 'required|integer',
+            'price' => 'required|integer|max:100000000',
 
             'type_of_appliance' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
