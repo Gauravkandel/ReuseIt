@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class recommendation extends Model
 {
     use HasFactory;
-    protected $table = "recommendations";
+    public $table = "recommendations";
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\SellProductController;
 use App\Http\Controllers\ViewProductController;
 use Illuminate\Http\Request;
@@ -20,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+//recommendation
+Route::post('/recommend', [RecommendationController::class, 'recommend']);
+Route::post('/get_recommend', [RecommendationController::class, 'getrecommended']);
+
 Route::controller(ViewProductController::class)->group(function () { //for viewing products
     Route::get('/getIndivProduct/{id}', 'getIndivProduct');
     Route::get('/getdat', 'fetchalldata');
