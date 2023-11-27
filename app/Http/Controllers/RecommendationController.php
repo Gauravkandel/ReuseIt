@@ -56,6 +56,6 @@ class RecommendationController extends Controller
             })->get();
             return response()->json(['recommendations' => $products ?? null], 200);
         }
-        return response()->json(['recommendations' => null], 200);
+        return response()->json(['recommendations' => null], 400);
     }
 }

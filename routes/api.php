@@ -4,34 +4,22 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\SellProductController;
 use App\Http\Controllers\ViewProductController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 //recommendation
 Route::post('/recommend', [RecommendationController::class, 'recommend']);
 Route::post('/get_recommend', [RecommendationController::class, 'getrecommended']);
 
-Route::controller(ViewProductController::class)->group(function () { //for viewing products
+//for viewing products
+Route::controller(ViewProductController::class)->group(function () {
     Route::get('/getIndivProduct/{id}', 'getIndivProduct');
     Route::get('/getdat', 'fetchalldata');
     Route::get('/filter', 'filter');
     Route::get('/search', 'search');
 });
-Route::controller(SellProductController::class)->group(function () { //for posting products
+
+//for posting products
+Route::controller(SellProductController::class)->group(function () {
     Route::post('/homeappliances', 'HomeAppliances');
     Route::post('/electronics', 'Electronics');
     Route::post('/furnitures', 'Furnitures');
@@ -46,7 +34,6 @@ Route::controller(SellProductController::class)->group(function () { //for posti
     Route::post('/toys', 'Toys');
     Route::post('/music', 'Music');
 });
-
 
 //authentication
 Route::post('/login', [AuthController::class, 'login']);
