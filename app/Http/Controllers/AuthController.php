@@ -109,7 +109,7 @@ class AuthController extends Controller
         $user_details = [
             'user' => auth()->user(),
         ];
-        $cookie = cookie('jwt', $token, auth()->factory()->getTTL(30), null, null, false, true);
+        $cookie = cookie('jwt', $token, auth()->factory()->getTTL(60 * 24), null, null, false, true);
 
         return response()->json($user_details)->withCookie($cookie);
     }
