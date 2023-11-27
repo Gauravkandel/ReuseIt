@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('age_group');
             $table->string('brand');
             $table->string('condition');
-            $table->text('description');
             $table->string('safety_information');
             $table->boolean('assembly_required')->nullable();
             $table->string('recommended_use');
