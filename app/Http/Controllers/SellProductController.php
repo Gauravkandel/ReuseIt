@@ -129,7 +129,7 @@ class SellProductController extends Controller
                 return response()->json(['error' => 'Image is required'], 422);
             }
             DB::commit();
-            return response()->json(['success' => 'successful', "product_id" => $product->id], 200);
+            return response()->json(['success' => 'successful', "product_id" => $product->id, "status" => 200], 200);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['error' => 'Failed to insert data.'], 500);
