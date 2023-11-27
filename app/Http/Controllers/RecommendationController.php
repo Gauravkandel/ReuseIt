@@ -49,8 +49,6 @@ class RecommendationController extends Controller
             return response()->json(['recommendations' => null], 400);
         }
 
-        $page = $request->query('page', 1);
-        $limit = $request->query('limit', 5);
         $categoryRecommendations = Recommendation::where('user_id', $user_id)
             ->orderByDesc('count')
             ->take(5)
@@ -63,10 +61,8 @@ class RecommendationController extends Controller
                     ->whereIn('category_name', $categoryRecommendations);
             })
             ->inRandomOrder()
-            ->skip(($page - 1) * $limit)
-            ->take($limit)
+            ->limit(10)
             ->get();
-
 
         return response()->json(['recommendations' => $products], 200);
     }
