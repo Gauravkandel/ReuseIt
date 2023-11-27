@@ -14,7 +14,6 @@ class toy extends Model
         'age_group',
         'brand',
         'condition',
-        'description',
         'safety_information',
         'assembly_required',
         'recommended_use',
