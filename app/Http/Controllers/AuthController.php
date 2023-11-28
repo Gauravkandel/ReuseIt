@@ -71,9 +71,10 @@ class AuthController extends Controller
      */
     public function me()
     {
+        $user = auth()->user();
+        $user->products;
         return response()->json(auth()->user());
     }
-
     /**
      * Log the user out (Invalidate the token).
      *
@@ -110,7 +111,6 @@ class AuthController extends Controller
             'user' => auth()->user(),
         ];
         $cookie = cookie('jwt', $token, auth()->factory()->getTTL(60 * 24), null, null, false, true);
-
         return response()->json($user_details)->withCookie($cookie);
     }
 }

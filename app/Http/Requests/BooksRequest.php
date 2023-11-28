@@ -32,8 +32,6 @@ class BooksRequest extends FormRequest
             'Municipality' => 'required|string',
             'price' => 'required|integer|max:100000000',
 
-
-            'title' => 'required|string',
             'author_artist' => 'required|string',
             'genre' => 'required|string',
             'format' => 'required|string',
