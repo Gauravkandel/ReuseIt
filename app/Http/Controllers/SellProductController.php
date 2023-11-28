@@ -96,9 +96,6 @@ class SellProductController extends Controller
             13
         );
     }
-
-
-
     private function insertProduct($request, $model, $dataKeys, $category)
     {
         $productData = $request->validated();

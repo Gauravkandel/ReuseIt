@@ -46,24 +46,27 @@ class RecommendationController extends Controller
         $user_id = $request->input('user_id');
 
         if (!$user_id) {
-            return response()->json(['recommendations' => null], 400);
+            return response()->json(['recommendations' => null]);
         }
+        $count = Recommendation::where('user_id', $user_id)->count();
+        if ($count >= 5) {
+            $categoryRecommendations = Recommendation::where('user_id', $user_id)
+                ->orderByDesc('count')
+                ->take(5)
+                ->pluck('category_name');
+            $products = Product::where('user_id', '!=', $user_id)
+                ->whereIn('category_id', function ($query) use ($categoryRecommendations) {
+                    $query->select('id')
+                        ->from('categories')
+                        ->whereIn('category_name', $categoryRecommendations);
+                })
+                ->inRandomOrder()
+                ->limit(10)
+                ->get();
 
-        $categoryRecommendations = Recommendation::where('user_id', $user_id)
-            ->orderByDesc('count')
-            ->take(5)
-            ->pluck('category_name');
-
-        $products = Product::where('user_id', '!=', $user_id)
-            ->whereIn('category_id', function ($query) use ($categoryRecommendations) {
-                $query->select('id')
-                    ->from('categories')
-                    ->whereIn('category_name', $categoryRecommendations);
-            })
-            ->inRandomOrder()
-            ->limit(10)
-            ->get();
-
-        return response()->json(['recommendations' => $products], 200);
+            return response()->json(['recommendations' => $products], 200);
+        } else {
+            return response()->json(['recommendations' => null]);
+        }
     }
 }
