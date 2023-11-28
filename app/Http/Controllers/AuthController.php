@@ -73,6 +73,11 @@ class AuthController extends Controller
     {
         $user = auth()->user();
         $user->products;
+        foreach ($user->products as $product) {
+            $product->image; // Access images relationship for each product
+            // Now $images contains the images associated with the current product
+        }
+
         return response()->json(auth()->user());
     }
     /**

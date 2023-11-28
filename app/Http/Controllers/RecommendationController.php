@@ -54,7 +54,7 @@ class RecommendationController extends Controller
                 ->orderByDesc('count')
                 ->take(5)
                 ->pluck('category_name');
-            $products = Product::where('user_id', '!=', $user_id)
+            $products = Product::with('image')->where('user_id', '!=', $user_id)
                 ->whereIn('category_id', function ($query) use ($categoryRecommendations) {
                     $query->select('id')
                         ->from('categories')

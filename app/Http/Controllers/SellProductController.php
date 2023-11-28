@@ -92,7 +92,7 @@ class SellProductController extends Controller
         return $this->insertProduct(
             $request,
             music::class,
-            ['type_of_toy_game', 'brand', 'age_group', 'material', 'accessories_included', 'play_characteristics'],
+            ['type_of_instrument', 'brand', 'condition', 'material', 'accessories_included', 'sound_characteristics'],
             13
         );
     }
