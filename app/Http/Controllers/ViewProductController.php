@@ -61,8 +61,8 @@ class ViewProductController extends Controller
         // }
         if ($searchTerm) {
             $query->where('pname', 'like', '%' . $searchTerm . '%')
-                ->orWhereHas('category', function ($query) use ($searchTerm) {
-                    $query->where('category_name', 'like', '%' . $searchTerm . '%');
+                ->orWhereHas('category', function ($qr) use ($searchTerm) {
+                    $qr->where('category_name', 'like', '%' . $searchTerm . '%');
                 })
                 ->orWhere('Province', 'like', '%' . $searchTerm . '%')
                 ->orWhere('District', 'like', '%' . $searchTerm . '%')
