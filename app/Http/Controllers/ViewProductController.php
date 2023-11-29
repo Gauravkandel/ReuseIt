@@ -61,7 +61,7 @@ class ViewProductController extends Controller
                 ->orWhere('description', 'like', '%' . $searchTerm . '%');
         })
             ->when($category, function ($queryBuilder) use ($category) {
-                $queryBuilder->where('category_name', '=', $category);
+                $queryBuilder->where('category_name', $category);
             })
             ->when($minPrice, function ($queryBuilder) use ($minPrice) {
                 $queryBuilder->where('price', '>=', $minPrice);
