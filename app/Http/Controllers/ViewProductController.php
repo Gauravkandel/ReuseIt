@@ -50,42 +50,54 @@ class ViewProductController extends Controller
 
     public function filter(Request $request)
     {
+        $page = $request->query('page', 1);
+        $limit = $request->query('limit', 10);
         $searchTerm = $request->query('search');
         $category = $request->query('category');
         $minPrice = $request->query('min_price');
         $maxPrice = $request->query('max_price');
+        $products = Product::when($searchTerm, function ($queryBuilder) use ($searchTerm) {
+            $queryBuilder->where('name', 'like', '%' . $searchTerm . '%')
+                ->orWhere('description', 'like', '%' . $searchTerm . '%');
+        })
+            ->when($category, function ($queryBuilder) use ($category) {
+                $queryBuilder->where('category_name', '===', $category);
+            })
+            ->when($minPrice, function ($queryBuilder) use ($minPrice) {
+                $queryBuilder->where('price', '>=', $minPrice);
+            })
+            ->when($maxPrice, function ($queryBuilder) use ($maxPrice) {
+                $queryBuilder->where('price', '<=', $maxPrice);
+            })->skip(($page - 1) * $limit)->take($limit)->get();
 
-        $query = Product::with(['category', 'image']);
-        // if (auth()->user()) {
-        //     $query->where('Municipality', auth()->user()->Municipality);
-        // }
-        if ($searchTerm) {
-            $query->where('pname', 'like', '%' . $searchTerm . '%')
-                ->orWhereHas('category', function ($qr) use ($searchTerm) {
-                    $qr->where('category_name', 'like', '%' . $searchTerm . '%');
-                })
-                ->orWhere('Province', 'like', '%' . $searchTerm . '%')
-                ->orWhere('District', 'like', '%' . $searchTerm . '%')
-                ->orWhere('Municipality', 'like', '%' . $searchTerm . '%');
-        }
-        if ($category) {
-            $query->whereHas('category', function ($q) use ($category) {
-                $q->where('category_name', $category);
-            });
-        }
-        if ($minPrice) {
-            $query->where('price', '>=', $minPrice);
-        }
-        if ($maxPrice) {
-            $query->where('price', '<=', $maxPrice);
-        }
-        $page = $request->query('page', 1);
-        $limit = $request->query('limit', 10);
-        $products = $query->skip(($page - 1) * $limit)->take($limit)->get();
+        //     $query = Product::with(['category', 'image']);
+        //     // if (auth()->user()) {
+        //     //     $query->where('Municipality', auth()->user()->Municipality);
+        //     // }
+        //     if ($searchTerm) {
+        //         $query->where('pname', 'like', '%' . $searchTerm . '%')
+        //             ->orWhereHas('category', function ($qr) use ($searchTerm) {
+        //                 $qr->where('category_name', 'like', '%' . $searchTerm . '%');
+        //             })
+        //             ->orWhere('Province', 'like', '%' . $searchTerm . '%')
+        //             ->orWhere('District', 'like', '%' . $searchTerm . '%')
+        //             ->orWhere('Municipality', 'like', '%' . $searchTerm . '%');
+        //     }
+        //     if ($category) {
+        //         $query->whereHas('category', function ($q) use ($category) {
+        //             $q->where('category_name', $category);
+        //         });
+        //     }
+        //     if ($minPrice) {
+        //         $query->where('price', '>=', $minPrice);
+        //     }
+        //     if ($maxPrice) {
+        //         $query->where('price', '<=', $maxPrice);
+        //     }
         return response()->json($products);
+        // }
+
     }
-
-
 
 
 
