@@ -56,12 +56,12 @@ class ViewProductController extends Controller
         $category = $request->query('category');
         $minPrice = $request->query('min_price');
         $maxPrice = $request->query('max_price');
-        $products = Product::when($searchTerm, function ($queryBuilder) use ($searchTerm) {
+        $products = product::when($searchTerm, function ($queryBuilder) use ($searchTerm) {
             $queryBuilder->where('name', 'like', '%' . $searchTerm . '%')
                 ->orWhere('description', 'like', '%' . $searchTerm . '%');
         })
             ->when($category, function ($queryBuilder) use ($category) {
-                $queryBuilder->where('category_name', '===', $category);
+                $queryBuilder->where('category_name', '=', $category);
             })
             ->when($minPrice, function ($queryBuilder) use ($minPrice) {
                 $queryBuilder->where('price', '>=', $minPrice);
