@@ -50,6 +50,7 @@ class ViewProductController extends Controller
 
     public function filter(Request $request)
     {
+        $searchTerm = $request->input('search');
         $category = $request->input('category');
         $minPrice = $request->input('min_price');
         $maxPrice = $request->input('max_price');
@@ -58,6 +59,15 @@ class ViewProductController extends Controller
         // if (auth()->user()) {
         //     $query->where('Municipality', auth()->user()->Municipality);
         // }
+        if ($searchTerm) {
+            $query->where('pname', 'like', '%' . $searchTerm . '%')
+                ->orWhereHas('category', function ($query) use ($searchTerm) {
+                    $query->where('category_name', 'like', '%' . $searchTerm . '%');
+                })
+                ->orWhere('Province', 'like', '%' . $searchTerm . '%')
+                ->orWhere('District', 'like', '%' . $searchTerm . '%')
+                ->orWhere('Municipality', 'like', '%' . $searchTerm . '%');
+        }
         if ($category) {
             $query->whereHas('category', function ($q) use ($category) {
                 $q->where('category_name', $category);
@@ -74,24 +84,6 @@ class ViewProductController extends Controller
         $products = $query->with(['category', 'image'])->skip(($page - 1) * $limit)->take($limit)->get();
         return response()->json($products);
     }
-    public function search(Request $request)
-    {
-        $searchTerm = $request->input('search');
-        $page = $request->query('page', 1);
-        $limit = $request->query('limit', 10);
-        //search data as category, location, and name
-        $results = Product::where('pname', 'like', '%' . $searchTerm . '%')
-            ->orWhereHas('category', function ($query) use ($searchTerm) {
-                $query->where('category_name', 'like', '%' . $searchTerm . '%');
-            })
-            ->orWhere('Province', 'like', '%' . $searchTerm . '%')
-            ->orWhere('District', 'like', '%' . $searchTerm . '%')
-            ->orWhere('Municipality', 'like', '%' . $searchTerm . '%')
-            ->with(['category', 'image'])->skip(($page - 1) * $limit)->take($limit)->get();
-        //sending data to front end for display
-        return response()->json($results);
-    }
-
 
 
 

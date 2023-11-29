@@ -16,7 +16,6 @@ Route::controller(ViewProductController::class)->group(function () {
     Route::get('/getIndivProduct/{id}', 'getIndivProduct');
     Route::get('/getdat', 'fetchalldata');
     Route::get('/filter', 'filter');
-    Route::get('/search', 'search');
 });
 
 //for posting products
