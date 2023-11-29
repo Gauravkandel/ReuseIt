@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\SellProductController;
 use App\Http\Controllers\ViewProductController;
@@ -42,4 +43,7 @@ Route::group(['middleware' => 'api'], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::post('/me', [AuthController::class, 'me']);
+    //For dashboard
+    Route::get('/myproducts', [DashboardController::class, 'myProducts']);
+    Route::get('/deleteads/{id}', [DashboardController::class, 'deleteAds']);
 });

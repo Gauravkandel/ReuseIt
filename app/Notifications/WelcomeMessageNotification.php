@@ -47,7 +47,7 @@ class WelcomeMessageNotification extends Notification implements ShouldQueue
     public function toDatabase(object $notifiable): array
     {
         return [
-            'data' => 'Welcome ' . $notifiable->name . ' to reuseit,
+            'WelcomeMessage' => 'Welcome ' . $notifiable->name . ' to reuseit,
             Thank you for using our Website!,If you have any questions, 
             feel free to contact us at contact@gmail.com.
             Regards, Reuseit'
