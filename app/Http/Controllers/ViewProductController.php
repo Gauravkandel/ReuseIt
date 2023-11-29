@@ -55,7 +55,7 @@ class ViewProductController extends Controller
         $minPrice = $request->input('min_price');
         $maxPrice = $request->input('max_price');
 
-        $query = Product::with('category');
+        $query = Product::with(['category', 'image']);
         // if (auth()->user()) {
         //     $query->where('Municipality', auth()->user()->Municipality);
         // }
@@ -81,7 +81,7 @@ class ViewProductController extends Controller
         }
         $page = $request->query('page', 1);
         $limit = $request->query('limit', 10);
-        $products = $query->with(['category', 'image'])->skip(($page - 1) * $limit)->take($limit)->get();
+        $products = $query->skip(($page - 1) * $limit)->take($limit)->get();
         return response()->json($products);
     }
 
