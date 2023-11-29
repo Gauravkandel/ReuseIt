@@ -50,10 +50,10 @@ class ViewProductController extends Controller
 
     public function filter(Request $request)
     {
-        $searchTerm = $request->input('search');
-        $category = $request->input('category');
-        $minPrice = $request->input('min_price');
-        $maxPrice = $request->input('max_price');
+        $searchTerm = $request->query('search');
+        $category = $request->query('category');
+        $minPrice = $request->query('min_price');
+        $maxPrice = $request->query('max_price');
 
         $query = Product::with(['category', 'image']);
         // if (auth()->user()) {
