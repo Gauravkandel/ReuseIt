@@ -47,35 +47,48 @@ class ViewProductController extends Controller
             return response()->json(['error' => 'Something went wrong'], 500);
         }
     }
-
     public function filter(Request $request)
     {
-        $search = $request->input('search');
+        $searchTerm = $request->input('search');
         $category = $request->input('category');
         $minPrice = $request->input('min_price');
         $maxPrice = $request->input('max_price');
 
-        $query = Product::with('category');
-        // if (auth()->user()) {
-        //     $query->where('Municipality', auth()->user()->Municipality);
-        // }
+        $query = Product::with(['category', 'image']);
+
+        if ($searchTerm) {
+            $query->where(function ($query) use ($searchTerm) {
+                $query->where('pname', 'like', '%' . $searchTerm . '%')
+                    ->orWhereHas('category', function ($query) use ($searchTerm) {
+                        $query->where('category_name', 'like', '%' . $searchTerm . '%');
+                    })
+                    ->orWhere('Province', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('District', 'like', '%' . $searchTerm . '%')
+                    ->orWhere('Municipality', 'like', '%' . $searchTerm . '%');
+            });
+        }
 
         if ($category) {
             $query->whereHas('category', function ($q) use ($category) {
                 $q->where('category_name', $category);
             });
         }
+
         if ($minPrice) {
             $query->where('price', '>=', $minPrice);
         }
+
         if ($maxPrice) {
             $query->where('price', '<=', $maxPrice);
         }
+
         $page = $request->query('page', 1);
         $limit = $request->query('limit', 10);
-        $products = $query->with(['category', 'image'])->skip(($page - 1) * $limit)->take($limit)->get();
+        $products = $query->skip(($page - 1) * $limit)->take($limit)->get();
+
         return response()->json($products);
     }
+
     public function search(Request $request)
     {
         $searchTerm = $request->input('search');
