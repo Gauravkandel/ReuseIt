@@ -20,7 +20,6 @@ class DashboardController extends Controller
         $limit = $request->query('limit', 10);
         $products = product::where('user_id', $user->id)
             ->with('category')->skip(($page - 1) * $limit)
-            ->take($limit)->get()->skip(($page - 1) * $limit)
             ->take($limit)->get();
         return response()->json($products, 200);
     }
