@@ -14,7 +14,7 @@ class DashboardController extends Controller
     public function myProducts()
     {
         $user = auth()->user();
-        $products = product::where('user_id', $user->id)->get();
+        $products = product::where('user_id', $user->id)->with('category')->get();
         return response()->json($products, 200);
     }
     public function deleteAds($id)
