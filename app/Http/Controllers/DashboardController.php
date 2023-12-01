@@ -29,4 +29,14 @@ class DashboardController extends Controller
         $products->delete();
         return response()->json(['Message' => 'Deleted Successfully']);
     }
+    public function Soldout(Request $request)
+    {
+        $product_id = $request->product_id;
+        $product_sp = $request->selling_price;
+        $productdata = product::find($product_id);
+        $productdata->status = 1;
+        $productdata->selling_price =  $product_sp;
+        $productdata->save();
+        return response()->json(['message' => 'successfull'], 200);
+    }
 }

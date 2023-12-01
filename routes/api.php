@@ -45,4 +45,5 @@ Route::group(['middleware' => 'api'], function () {
     //For dashboard
     Route::get('/myproducts', [DashboardController::class, 'myProducts']);
     Route::get('/deleteads/{id}', [DashboardController::class, 'deleteAds']);
+    Route::post('/status', [DashboardController::class, 'Soldout']);
 });
