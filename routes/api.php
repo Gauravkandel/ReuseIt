@@ -48,5 +48,5 @@ Route::group(['middleware' => 'api'], function () {
     Route::post('/status', [DashboardController::class, 'Soldout']);
     //For chat application
     Route::post('/messages', [chatController::class, 'message']);
-    Route::get('/messages/{senderId}/{receiverId}', [chatController::class, 'getMessages']);
+    Route::get('/messages/{receiverId}', [chatController::class, 'getMessages']);
 });

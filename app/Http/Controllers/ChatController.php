@@ -34,8 +34,9 @@ class ChatController extends Controller
         event(new MessageEvent($username, $request->input('message'), $roomId, $timeago, $sender_id));
         return response()->json(['status' => 'Message sent successfully']);
     }
-    public function getMessages($senderId, $receiverId)
+    public function getMessages($receiverId)
     {
+        $senderId = auth()->user()->id;
         $messages = Message::where(function ($query) use ($senderId, $receiverId) {
             $query->where('sender_id', $senderId)
                 ->where('receiver_id', $receiverId);
