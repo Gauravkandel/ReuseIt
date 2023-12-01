@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RecommendationController;
 use App\Http\Controllers\SellProductController;
@@ -47,6 +48,6 @@ Route::group(['middleware' => 'api'], function () {
     Route::get('/deleteads/{id}', [DashboardController::class, 'deleteAds']);
     Route::post('/status', [DashboardController::class, 'Soldout']);
     //For chat application
-    Route::post('/messages', [chatController::class, 'message']);
-    Route::get('/messages/{receiverId}', [chatController::class, 'getMessages']);
+    Route::post('/messages', [ChatController::class, 'message']);
+    Route::get('/messages/{receiverId}', [ChatController::class, 'getMessages']);
 });
