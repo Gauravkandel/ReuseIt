@@ -46,4 +46,7 @@ Route::group(['middleware' => 'api'], function () {
     Route::get('/myproducts', [DashboardController::class, 'myProducts']);
     Route::get('/deleteads/{id}', [DashboardController::class, 'deleteAds']);
     Route::post('/status', [DashboardController::class, 'Soldout']);
+    //For chat application
+    Route::post('/messages', [chatController::class, 'message']);
+    Route::get('/messages/{senderId}/{receiverId}', [chatController::class, 'getMessages']);
 });
